@@ -1,1 +1,30 @@
-a
+public class Sedan extends Veiculos {
+    private double desconto;
+
+
+    public Sedan(String placa, String marca, double preco, double desconto) {
+        super(placa, marca, preco);
+        this.setPreco(preco); 
+        this.desconto = desconto;
+        
+    }
+
+
+    public double getDesconto() {
+        return desconto;
+    }
+
+    public void setDesconto(double desconto) {
+        this.desconto = desconto;
+    }
+    public double precoComDesconto() {
+        return getPreco() - (getPreco() * (desconto / 100));   
+    }
+
+    @Override
+    public void status() {
+        super.status();
+        System.out.println("Desconto: " + this.desconto + "%");
+        
+    }
+}
