@@ -16,7 +16,7 @@ public class App {
             System.out.println("0- Sair");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
-            scanner.nextLine(); // Consumir o newline após a entrada de um número
+            scanner.nextLine(); 
 
             switch (opcao) {
                 case 1:
@@ -29,7 +29,7 @@ public class App {
                         System.out.println("0- Voltar");
                         System.out.print("Escolha uma opção: ");
                         opcaoCadastro = scanner.nextInt();
-                        scanner.nextLine(); // Consumir o newline
+                        scanner.nextLine();
 
                         switch (opcaoCadastro) {
                             case 1:
@@ -53,7 +53,7 @@ public class App {
                                 String modeloSedan = scanner.nextLine();
                                 System.out.print("Qual o valor da tarifa diária? ");
                                 double tarifaSedan = scanner.nextDouble();
-                                scanner.nextLine(); // Consumir o newline
+                                scanner.nextLine(); 
 
                                 Veiculo sedan = new Sedan(marcaSedan, modeloSedan, tarifaSedan);
                                 listaVeiculos.add(sedan);
@@ -67,7 +67,7 @@ public class App {
                                 String modeloCompacto = scanner.nextLine();
                                 System.out.print("Qual o valor da tarifa diária? ");
                                 double tarifaCompacto = scanner.nextDouble();
-                                scanner.nextLine(); // Consumir o newline
+                                scanner.nextLine(); 
 
                                 Veiculo compacto = new Compacto(marcaCompacto, modeloCompacto, tarifaCompacto);
                                 listaVeiculos.add(compacto);
@@ -109,7 +109,7 @@ public class App {
 
                         System.out.print("Escolha o número do veículo para reserva: ");
                         int escolha = scanner.nextInt();
-                        scanner.nextLine(); // Consumir o newline
+                        scanner.nextLine(); 
                         
                         if (escolha >= 1 && escolha <= listaVeiculos.size()) {
                             Veiculo veiculoEscolhido = listaVeiculos.get(escolha - 1);
