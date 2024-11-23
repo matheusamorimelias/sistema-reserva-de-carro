@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class App {
-    private static final String ARQUIVO_JSON = "veiculos.json"; 
-    private static List<Veiculo> listaVeiculos = new ArrayList<>(); 
+    private static final String ARQUIVO_JSON = "veiculos.json";
+    private static List<Veiculo> listaVeiculos = new ArrayList<>();
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int opcao;
@@ -46,7 +47,7 @@ public class App {
                                 String modeloSuv = scanner.nextLine();
                                 System.out.print("Qual o valor da tarifa diária? ");
                                 double tarifaSuv = scanner.nextDouble();
-                                scanner.nextLine(); 
+                                scanner.nextLine();
 
                                 Veiculo suv = new Suv(marcaSuv, modeloSuv, tarifaSuv);
                                 listaVeiculos.add(suv);
@@ -60,7 +61,7 @@ public class App {
                                 String modeloSedan = scanner.nextLine();
                                 System.out.print("Qual o valor da tarifa diária? ");
                                 double tarifaSedan = scanner.nextDouble();
-                                scanner.nextLine(); 
+                                scanner.nextLine();
                                 Veiculo sedan = new Sedan(marcaSedan, modeloSedan, tarifaSedan);
                                 listaVeiculos.add(sedan);
                                 System.out.println("Sedan cadastrado com sucesso!");
@@ -73,71 +74,100 @@ public class App {
                                 String modeloCompacto = scanner.nextLine();
                                 System.out.print("Qual o valor da tarifa diária? ");
                                 double tarifaCompacto = scanner.nextDouble();
-                                scanner.nextLine(); // Consumir a nova linha
+                                scanner.nextLine(); 
 
                                 Veiculo compacto = new Compacto(marcaCompacto, modeloCompacto, tarifaCompacto);
                                 listaVeiculos.add(compacto);
                                 System.out.println("Compacto cadastrado com sucesso!");
                                 break;
-
+                            
                             case 0:
-                                System.out.println("Voltando ao menu principal...");
+                                try {
+                                    System.out.println("Voltando ao menu principal...");
+                                } catch (RuntimeException e) {
+                                    System.out.println("Ocorreu um erro ao voltar ao menu principal: " + e.getMessage());
+                                }
                                 break;
-
+                            
                             default:
-                                System.out.println("Opção inválida, digite novamente.");
+                                try {
+                                    System.out.println("Opção inválida, digite novamente.");
+                                } catch (RuntimeException e) {
+                                    System.out.println("Ocorreu um erro ao processar a opção inválida: " + e.getMessage());
+                                }
                                 break;
                         }
                     } while (opcaoCadastro != 0);
                     break;
 
                 case 2:
-                    System.out.println("\n=== VEÍCULOS CADASTRADOS ===");
-                    if (listaVeiculos.isEmpty()) {
-                        System.out.println("Nenhum veículo cadastrado.");
-                    } else {
-                        for (Veiculo veiculo : listaVeiculos) {
-                            veiculo.exibirDetalhes();
-                            System.out.println("----------------------------");
+                    try {
+                        System.out.println("\n=== VEÍCULOS CADASTRADOS ===");
+
+                        if (listaVeiculos == null || listaVeiculos.isEmpty()) {
+                            throw new RuntimeException("Nenhum veículo cadastrado.");
+                        } else {
+                            for (Veiculo veiculo : listaVeiculos) {
+                                veiculo.exibirDetalhes();
+                                System.out.println("----------------------------");
+                            }
                         }
+                    } catch (RuntimeException e) {
+                        System.out.println(e.getMessage());  
                     }
                     break;
 
                 case 3:
                     System.out.println("\n=== RESERVAR VEÍCULO ===");
-                    if (listaVeiculos.isEmpty()) {
-                        System.out.println("Nenhum veículo disponível para reserva.");
-                    } else {
-                        for (int i = 0; i < listaVeiculos.size(); i++) {
-                            Veiculo veiculo = listaVeiculos.get(i);
-                            System.out.println((i + 1) + "- ");
-                            veiculo.exibirDetalhes();
-                        }
-
-                        System.out.print("Escolha o número do veículo para reserva: ");
-                        int escolha = scanner.nextInt();
-                        scanner.nextLine(); 
-                        
-                        if (escolha >= 1 && escolha <= listaVeiculos.size()) {
-                            Veiculo veiculoEscolhido = listaVeiculos.get(escolha - 1);
-                            System.out.println("\nReserva confirmada!");
-                            veiculoEscolhido.exibirDetalhes();
+                    try {
+                        if (listaVeiculos.isEmpty()) {
+                            throw new RuntimeException("Nenhum veículo disponível para reserva.");
                         } else {
-                            System.out.println("Opção inválida, tente novamente.");
+                            for (int i = 0; i < listaVeiculos.size(); i++) {
+                                Veiculo veiculo = listaVeiculos.get(i);
+                                System.out.println((i + 1) + "- ");
+                                veiculo.exibirDetalhes();
+                            }
+
+                            System.out.print("Escolha o número do veículo para reserva: ");
+                            int escolha = scanner.nextInt();
+                            scanner.nextLine();
+
+                            if (escolha >= 1 && escolha <= listaVeiculos.size()) {
+                                Veiculo veiculoEscolhido = listaVeiculos.get(escolha - 1);
+                                System.out.println("\nReserva confirmada!");
+                                veiculoEscolhido.exibirDetalhes();
+                            } else {
+                                throw new RuntimeException("Opção inválida, tente novamente.");
+                            }
                         }
+                    } catch (RuntimeException e) {
+                        System.out.println(e.getMessage());
                     }
                     break;
 
-                case 0:
-                    System.out.println("Encerrando o programa...");
+                    case 0:
+                    try {
+                        System.out.println("Você escolheu a opção 0. Saindo do programa...");
+                    } catch (RuntimeException e) {
+                        System.out.println("Ocorreu um erro ao voltar ao menu principal: " + e.getMessage());
+                    }
                     break;
-
+                
                 default:
-                    System.out.println("Opção inválida, digite novamente.");
+                    try {
+                        System.out.println("Opção inválida, digite novamente.");
+                    } catch (RuntimeException e) {
+                        System.out.println("Ocorreu um erro ao processar a opção inválida: " + e.getMessage());
+                    }
                     break;
-            }
+                
+                    
+                }
+
         } while (opcao != 0);
 
         scanner.close();
     }
 }
+
