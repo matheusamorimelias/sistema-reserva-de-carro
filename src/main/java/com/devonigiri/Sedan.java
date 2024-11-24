@@ -10,5 +10,5 @@ public class Sedan extends Veiculo {
         super.exibirDetalhes();
         System.out.println("Tipo: Sedan");
     }
-    
+
 }
