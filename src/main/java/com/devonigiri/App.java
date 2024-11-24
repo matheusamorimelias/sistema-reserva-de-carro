@@ -1,4 +1,4 @@
-package com;
+package com.devonigiri;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

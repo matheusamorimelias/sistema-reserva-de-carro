@@ -1,4 +1,4 @@
-package com;
+package com.devonigiri;
 
 public class Suv extends Veiculo {
     public Suv(String marca, String modelo, double tarifaDiaria) {

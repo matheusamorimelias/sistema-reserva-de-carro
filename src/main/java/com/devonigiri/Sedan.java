@@ -1,4 +1,4 @@
-package com;
+package com.devonigiri;
 
 public class Sedan extends Veiculo {
     public Sedan(String marca, String modelo, double tarifaDiaria) {
