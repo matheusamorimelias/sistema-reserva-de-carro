@@ -1,4 +1,13 @@
 {
+<<<<<<< HEAD
     "java.configuration.updateBuildConfiguration": "interactive",
     "maven.view": "flat"
 }
+=======
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar"
+    ]
+}
+>>>>>>> b8e31e2a1fa0e889b3ee2344e975fb60f4c1c5c8

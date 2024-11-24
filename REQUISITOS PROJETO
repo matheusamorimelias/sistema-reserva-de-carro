@@ -1,0 +1,24 @@
+Requisitos:
+Segunda Avaliação (AV2) – 02/12
+• Projeto (em grupo de até 5 pessoas)
+• Todos conceitos estudados na disciplina
+• Utilizar o framework Spring Boot (foi alterado pra ser opcional, vale 1 ponto extra)
+• Utilizar arquivo Json para manipular os dados (se utilizar banco de dados,
+ganhará até 1 ponto extra)
+• Não é obrigatório Front End (se implementar, ganhará até 1 ponto extra)
+No mínimo, o projeto deverá ter 3 (três) CRUDs, e 1
+(um) relacionamento entre as classes.
+
+Desafio:
+Como desenvolver um sistema eficiente de reserva de carros que facilite o processo de aluguel para os clientes,
+permitindo a escolha de veículos, datas e locais de retirada/devolução, garantindo uma experiência suave e
+conveniente ao planejar viagens ou deslocamentos?
+Objetivos:
+Reservas e Agendamento de Veículos: Permita que os usuários pesquisem, comparem e reservem veículos
+disponíveis para aluguel. Eles devem poder selecionar datas, horários de retirada e devolução, bem como
+escolher entre diferentes tipos de veículos (sedãs, SUVs, carros compactos, etc.). O app deve mostrar
+informações detalhadas sobre os carros, incluindo características, imagens e tarifas.
+Rastreamento e Retirada do Veículo: Integre um sistema de rastreamento de localização dos veículos alugados.
+O app pode fornecer um mapa com a localização exata do carro alugado, facilitando a retirada por parte do
+cliente. Além disso, o app pode incluir um processo de check-in online para agilizar a retirada do veículo,
+minimizando o tempo necessário na loja física.
