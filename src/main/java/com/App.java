@@ -74,26 +74,28 @@ public class App {
                                 String modeloCompacto = scanner.nextLine();
                                 System.out.print("Qual o valor da tarifa diária? ");
                                 double tarifaCompacto = scanner.nextDouble();
-                                scanner.nextLine(); 
+                                scanner.nextLine();
 
                                 Veiculo compacto = new Compacto(marcaCompacto, modeloCompacto, tarifaCompacto);
                                 listaVeiculos.add(compacto);
                                 System.out.println("Compacto cadastrado com sucesso!");
                                 break;
-                            
+
                             case 0:
                                 try {
                                     System.out.println("Voltando ao menu principal...");
                                 } catch (RuntimeException e) {
-                                    System.out.println("Ocorreu um erro ao voltar ao menu principal: " + e.getMessage());
+                                    System.out
+                                            .println("Ocorreu um erro ao voltar ao menu principal: " + e.getMessage());
                                 }
                                 break;
-                            
+
                             default:
                                 try {
                                     System.out.println("Opção inválida, digite novamente.");
                                 } catch (RuntimeException e) {
-                                    System.out.println("Ocorreu um erro ao processar a opção inválida: " + e.getMessage());
+                                    System.out.println(
+                                            "Ocorreu um erro ao processar a opção inválida: " + e.getMessage());
                                 }
                                 break;
                         }
@@ -113,7 +115,7 @@ public class App {
                             }
                         }
                     } catch (RuntimeException e) {
-                        System.out.println(e.getMessage());  
+                        System.out.println(e.getMessage());
                     }
                     break;
 
@@ -146,14 +148,14 @@ public class App {
                     }
                     break;
 
-                    case 0:
+                case 0:
                     try {
                         System.out.println("Você escolheu a opção 0. Saindo do programa...");
                     } catch (RuntimeException e) {
                         System.out.println("Ocorreu um erro ao voltar ao menu principal: " + e.getMessage());
                     }
                     break;
-                
+
                 default:
                     try {
                         System.out.println("Opção inválida, digite novamente.");
@@ -161,13 +163,11 @@ public class App {
                         System.out.println("Ocorreu um erro ao processar a opção inválida: " + e.getMessage());
                     }
                     break;
-                
-                    
-                }
+
+            }
 
         } while (opcao != 0);
 
         scanner.close();
     }
 }
-
