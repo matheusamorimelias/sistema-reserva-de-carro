@@ -13,7 +13,7 @@ public class App {
     private static List<Veiculo> listaVeiculos = new ArrayList<>();
 
     public static void main(String[] args) {
-        carregarVeiculos();
+        carregarVeiculos();  
         Scanner scanner = new Scanner(System.in);
         int opcao;
 
@@ -52,7 +52,7 @@ public class App {
 
                                 Veiculo suv = new Suv(marcaSuv, modeloSuv, tarifaSuv);
                                 listaVeiculos.add(suv);
-                                salvarVeiculos(); // Salvar após cadastro
+                                salvarVeiculos(); 
                                 System.out.println("SUV cadastrado com sucesso!");
                                 break;
 
@@ -81,7 +81,7 @@ public class App {
 
                                 Veiculo compacto = new Compacto(marcaCompacto, modeloCompacto, tarifaCompacto);
                                 listaVeiculos.add(compacto);
-                                salvarVeiculos();
+                                salvarVeiculos(); 
                                 System.out.println("Compacto cadastrado com sucesso!");
                                 break;
 
@@ -131,8 +131,16 @@ public class App {
 
                             if (escolha >= 1 && escolha <= listaVeiculos.size()) {
                                 Veiculo veiculoEscolhido = listaVeiculos.get(escolha - 1);
+                                
                                 System.out.println("\nReserva confirmada!");
                                 veiculoEscolhido.exibirDetalhes();
+
+                                
+                                listaVeiculos.remove(veiculoEscolhido);
+
+                                
+                                salvarVeiculos();
+                                System.out.println("Veículo removido da lista e alteração salva.");
                             } else {
                                 throw new RuntimeException("Opção inválida, tente novamente.");
                             }
@@ -156,6 +164,7 @@ public class App {
         scanner.close();
     }
 
+
     private static void salvarVeiculos() {
         try (FileWriter writer = new FileWriter(ARQUIVO_JSON)) {
             Gson gson = new Gson();
@@ -173,6 +182,9 @@ public class App {
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<Veiculo>>(){}.getType();
                 listaVeiculos = gson.fromJson(reader, listType);
+                if (listaVeiculos == null) {
+                    listaVeiculos = new ArrayList<>(); 
+                }
             } catch (IOException e) {
                 System.out.println("Erro ao carregar os veículos do arquivo: " + e.getMessage());
             }
