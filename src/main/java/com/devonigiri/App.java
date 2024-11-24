@@ -13,6 +13,8 @@ public class App {
     private static List<Veiculo> listaVeiculos = new ArrayList<>();
 
     public static void main(String[] args) {
+        carregarVeiculos(); // Carregar veículos ao iniciar
+
         Scanner scanner = new Scanner(System.in);
         int opcao;
 
@@ -51,6 +53,7 @@ public class App {
 
                                 Veiculo suv = new Suv(marcaSuv, modeloSuv, tarifaSuv);
                                 listaVeiculos.add(suv);
+                                salvarVeiculos(); // Salvar após cadastro
                                 System.out.println("SUV cadastrado com sucesso!");
                                 break;
 
@@ -64,6 +67,7 @@ public class App {
                                 scanner.nextLine();
                                 Veiculo sedan = new Sedan(marcaSedan, modeloSedan, tarifaSedan);
                                 listaVeiculos.add(sedan);
+                                salvarVeiculos(); // Salvar após cadastro
                                 System.out.println("Sedan cadastrado com sucesso!");
                                 break;
 
@@ -78,25 +82,16 @@ public class App {
 
                                 Veiculo compacto = new Compacto(marcaCompacto, modeloCompacto, tarifaCompacto);
                                 listaVeiculos.add(compacto);
+                                salvarVeiculos(); // Salvar após cadastro
                                 System.out.println("Compacto cadastrado com sucesso!");
                                 break;
 
                             case 0:
-                                try {
-                                    System.out.println("Voltando ao menu principal...");
-                                } catch (RuntimeException e) {
-                                    System.out
-                                            .println("Ocorreu um erro ao voltar ao menu principal: " + e.getMessage());
-                                }
+                                System.out.println("Voltando ao menu principal...");
                                 break;
 
                             default:
-                                try {
-                                    System.out.println("Opção inválida, digite novamente.");
-                                } catch (RuntimeException e) {
-                                    System.out.println(
-                                            "Ocorreu * um erro ao processar a opção inválida: " + e.getMessage());
-                                }
+                                System.out.println("Opção inválida, digite novamente.");
                                 break;
                         }
                     } while (opcaoCadastro != 0);
@@ -106,7 +101,7 @@ public class App {
                     try {
                         System.out.println("\n=== VEÍCULOS CADASTRADOS ===");
 
-                        if (listaVeiculos == null || listaVeiculos.isEmpty()) {
+                        if (listaVeiculos.isEmpty()) {
                             throw new RuntimeException("Nenhum veículo cadastrado.");
                         } else {
                             for (Veiculo veiculo : listaVeiculos) {
@@ -149,25 +144,40 @@ public class App {
                     break;
 
                 case 0:
-                    try {
-                        System.out.println("Você escolheu a opção 0. Saindo do programa...");
-                    } catch (RuntimeException e) {
-                        System.out.println("Ocorreu um erro ao voltar ao menu principal: " + e.getMessage());
-                    }
+                    System.out.println("Você escolheu a opção 0. Saindo do programa...");
                     break;
 
                 default:
-                    try {
-                        System.out.println("Opção inválida, digite novamente.");
-                    } catch (RuntimeException e) {
-                        System.out.println("Ocorreu um erro ao processar a opção inválida: " + e.getMessage());
-                    }
+                    System.out.println("Opção inválida, digite novamente.");
                     break;
-
             }
 
         } while (opcao != 0);
 
         scanner.close();
+    }
+
+    // Método para salvar a lista de veículos no arquivo JSON
+    private static void salvarVeiculos() {
+        try (FileWriter writer = new FileWriter(ARQUIVO_JSON)) {
+            Gson gson = new Gson();
+            gson.toJson(listaVeiculos, writer);
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar os veículos no arquivo: " + e.getMessage());
+        }
+    }
+
+    // Método para carregar a lista de veículos do arquivo JSON
+    private static void carregarVeiculos() {
+        File file = new File(ARQUIVO_JSON);
+        if (file.exists()) {
+            try (FileReader reader = new FileReader(ARQUIVO_JSON)) {
+                Gson gson = new Gson();
+                Type listType = new TypeToken<List<Veiculo>>(){}.getType();
+                listaVeiculos = gson.fromJson(reader, listType);
+            } catch (IOException e) {
+                System.out.println("Erro ao carregar os veículos do arquivo: " + e.getMessage());
+            }
+        }
     }
 }
