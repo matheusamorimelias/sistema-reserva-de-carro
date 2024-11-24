@@ -95,7 +95,7 @@ public class App {
                                     System.out.println("Opção inválida, digite novamente.");
                                 } catch (RuntimeException e) {
                                     System.out.println(
-                                            "Ocorreu um erro ao processar a opção inválida: " + e.getMessage());
+                                            "Ocorreu * um erro ao processar a opção inválida: " + e.getMessage());
                                 }
                                 break;
                         }
