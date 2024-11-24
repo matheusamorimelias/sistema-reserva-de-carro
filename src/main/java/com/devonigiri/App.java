@@ -13,8 +13,7 @@ public class App {
     private static List<Veiculo> listaVeiculos = new ArrayList<>();
 
     public static void main(String[] args) {
-        carregarVeiculos(); // Carregar veículos ao iniciar
-
+        carregarVeiculos();
         Scanner scanner = new Scanner(System.in);
         int opcao;
 
@@ -67,7 +66,7 @@ public class App {
                                 scanner.nextLine();
                                 Veiculo sedan = new Sedan(marcaSedan, modeloSedan, tarifaSedan);
                                 listaVeiculos.add(sedan);
-                                salvarVeiculos(); // Salvar após cadastro
+                                salvarVeiculos(); 
                                 System.out.println("Sedan cadastrado com sucesso!");
                                 break;
 
@@ -82,7 +81,7 @@ public class App {
 
                                 Veiculo compacto = new Compacto(marcaCompacto, modeloCompacto, tarifaCompacto);
                                 listaVeiculos.add(compacto);
-                                salvarVeiculos(); // Salvar após cadastro
+                                salvarVeiculos();
                                 System.out.println("Compacto cadastrado com sucesso!");
                                 break;
 
@@ -157,7 +156,6 @@ public class App {
         scanner.close();
     }
 
-    // Método para salvar a lista de veículos no arquivo JSON
     private static void salvarVeiculos() {
         try (FileWriter writer = new FileWriter(ARQUIVO_JSON)) {
             Gson gson = new Gson();
@@ -167,7 +165,7 @@ public class App {
         }
     }
 
-    // Método para carregar a lista de veículos do arquivo JSON
+
     private static void carregarVeiculos() {
         File file = new File(ARQUIVO_JSON);
         if (file.exists()) {
