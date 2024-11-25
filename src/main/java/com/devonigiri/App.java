@@ -23,7 +23,8 @@ public class App {
             System.out.println("2- Exibir Veículos Cadastrados");
             System.out.println("3- Reservar Veículo");
             System.out.println("4- Atualizar Veiculo");
-            System.out.println("5- Excluir Veicolo Cadastrado");
+            System.out.println("5- Devolver Veiculo");
+            System.out.println("6- Excluir Veicolo Cadastrado");
             System.out.println("0- Sair");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
@@ -149,15 +150,14 @@ public class App {
                         System.out.println(e.getMessage());
                     }
                     break;
-                    case 4:
+                case 4:
                     System.out.println("\nAtualizando Veículos Cadastrados");
                     try {
                         System.out.println("\n=== VEÍCULOS CADASTRADOS ===");
-                
                         if (listaVeiculos.isEmpty()) {
                             throw new RuntimeException("Nenhum veículo cadastrado.");
                         } else {
-                            
+                
                             for (int i = 0; i < listaVeiculos.size(); i++) {
                                 Veiculo veiculo = listaVeiculos.get(i);
                                 System.out.println((i + 1) + "- " + veiculo.getMarca() + " " + veiculo.getModelo());
@@ -172,22 +172,22 @@ public class App {
                             }
                 
                             Veiculo veiculoEscolhido = listaVeiculos.get(escolha - 1);
-                            
-                            
+                
+                    
                             System.out.print("Nova marca: ");
                             String novaMarca = scanner.nextLine();
                             System.out.print("Novo modelo: ");
                             String novoModelo = scanner.nextLine();
                             System.out.print("Nova tarifa diária: ");
                             double novaTarifa = scanner.nextDouble();
-                            scanner.nextLine();  
+                            scanner.nextLine(); 
                 
                             
                             veiculoEscolhido.setMarca(novaMarca);
                             veiculoEscolhido.setModelo(novoModelo);
                             veiculoEscolhido.setTarifaDiaria(novaTarifa);
                 
-                            
+
                             salvarVeiculos();
                             System.out.println("Veículo atualizado com sucesso!");
                         }
@@ -195,9 +195,34 @@ public class App {
                         System.out.println(e.getMessage());
                     }
                     break;
+
+                case 6:
+                    System.out.println("\nExcluindo Veículo Cadastrado");
+                    try {
+                        System.out.println("\n=== VEÍCULOS CADASTRADOS ===");
+                        if (listaVeiculos.isEmpty()) {
+                            throw new RuntimeException("Nenhum veículo cadastrado.");
+                        } else {
+                            for (int i = 0; i < listaVeiculos.size(); i++) {
+                                Veiculo veiculo = listaVeiculos.get(i);
+                                System.out.println((i + 1) + "- " + veiculo.getMarca() + " " + veiculo.getModelo());
+                            }
+                            System.out.print("Escolha o número do veículo para excluir: ");
+                            int escolha = scanner.nextInt();
+                            scanner.nextLine(); 
+                            if (escolha < 1 || escolha > listaVeiculos.size()) {
+                                throw new RuntimeException("Opção inválida.");
+                            }
                 
-
-
+                            Veiculo veiculoEscolhido = listaVeiculos.get(escolha - 1);
+                            listaVeiculos.remove(veiculoEscolhido); 
+                            salvarVeiculos();
+                            System.out.println("Veículo excluído com sucesso!");
+                        }
+                    } catch (RuntimeException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
                 case 0:
                     System.out.println("Você escolheu a opção 0. Saindo do programa...");
                     break;
