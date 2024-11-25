@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.*;
 import java.lang.reflect.Type;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -134,6 +135,13 @@ public class App {
                             if (escolha >= 1 && escolha <= listaVeiculos.size()) {
                                 Veiculo veiculoEscolhido = listaVeiculos.get(escolha - 1);
 
+                                System.out.print("Quantos dias você deseja reservar o veículo? ");
+                                int diasReserva = scanner.nextInt();
+                                scanner.nextLine();
+
+                                veiculoEscolhido.setDiasReservados(diasReserva);
+                                veiculoEscolhido.setDataReserva(LocalDate.now());
+
                                 System.out.println("\nReserva confirmada!");
                                 veiculoEscolhido.exibirDetalhes();
 
@@ -215,6 +223,13 @@ public class App {
                             if (escolha >= 1 && escolha <= listaReserva.size()) {
                                 Veiculo veiculoDevolvido = listaReserva.get(escolha - 1);
 
+                                System.out.print("Quantos dias o veículo foi reservado? ");
+                                int diasDevolucao = scanner.nextInt();
+                                scanner.nextLine();
+
+                                double valorTotal = veiculoDevolvido.calcularValorReserva();
+                                System.out.println("O valor total da reserva é: R$ " + valorTotal);
+
                                 System.out.println("\nVeículo devolvido com sucesso!");
                                 veiculoDevolvido.exibirDetalhes();
 
@@ -243,6 +258,7 @@ public class App {
                                 Veiculo veiculo = listaVeiculos.get(i);
                                 System.out.println((i + 1) + "- ");
                                 veiculo.exibirDetalhes();
+                                System.out.println("----------------------------");
                             }
 
                             System.out.print("Escolha o número do veículo para excluir: ");
@@ -253,11 +269,9 @@ public class App {
                                 throw new RuntimeException("Opção inválida.");
                             }
 
-                            Veiculo veiculoEscolhido = listaVeiculos.get(escolha - 1);
-                            listaVeiculos.remove(veiculoEscolhido);
-
+                            listaVeiculos.remove(escolha - 1);
                             salvarVeiculos();
-                            System.out.println("Veículo excluído com sucesso!");
+                            System.out.println("Veículo excluído com sucesso.");
                         }
                     } catch (RuntimeException e) {
                         System.out.println(e.getMessage());
@@ -265,35 +279,41 @@ public class App {
                     break;
 
                 case 0:
-                    System.out.println("Saindo do programa...");
+                    System.out.println("Saindo...");
                     break;
 
                 default:
-                    System.out.println("Opção inválida. Tente novamente.");
-                    break;
+                    System.out.println("Opção inválida, tente novamente.");
             }
         } while (opcao != 0);
+
+        scanner.close();
     }
 
     private static void carregarVeiculos() {
-        File arquivo = new File(ARQUIVO_JSON);
-        if (arquivo.exists()) {
-            try (Reader reader = new FileReader(ARQUIVO_JSON)) {
+        try {
+            File file = new File(ARQUIVO_JSON);
+            if (file.exists()) {
+                FileReader reader = new FileReader(file);
                 Gson gson = new Gson();
-                Type tipoListaVeiculos = new TypeToken<List<Veiculo>>(){}.getType();
-                listaVeiculos = gson.fromJson(reader, tipoListaVeiculos);
-            } catch (IOException e) {
-                e.printStackTrace();
+                Type listType = new TypeToken<List<Veiculo>>(){}.getType();
+                listaVeiculos = gson.fromJson(reader, listType);
+                reader.close();
             }
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar dados do arquivo.");
         }
     }
 
     private static void salvarVeiculos() {
-        try (Writer writer = new FileWriter(ARQUIVO_JSON)) {
+        try {
+            FileWriter writer = new FileWriter(ARQUIVO_JSON);
             Gson gson = new Gson();
-            gson.toJson(listaVeiculos, writer);
+            String json = gson.toJson(listaVeiculos);
+            writer.write(json);
+            writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Erro ao salvar dados no arquivo.");
         }
     }
 }
