@@ -11,9 +11,10 @@ import java.util.Scanner;
 public class App {
     private static final String ARQUIVO_JSON = "veiculos.json";
     private static List<Veiculo> listaVeiculos = new ArrayList<>();
+    private static List<Veiculo> listaReserva = new ArrayList<>();
 
     public static void main(String[] args) {
-        carregarVeiculos();  
+        carregarVeiculos();
         Scanner scanner = new Scanner(System.in);
         int opcao;
 
@@ -24,7 +25,7 @@ public class App {
             System.out.println("3- Reservar Veículo");
             System.out.println("4- Atualizar Veiculo");
             System.out.println("5- Devolver Veiculo");
-            System.out.println("6- Excluir Veicolo Cadastrado");
+            System.out.println("6- Excluir Veículo Cadastrado");
             System.out.println("0- Sair");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
@@ -54,7 +55,7 @@ public class App {
                                 scanner.nextLine();
                                 Veiculo suv = new Suv(marcaSuv, modeloSuv, tarifaSuv);
                                 listaVeiculos.add(suv);
-                                salvarVeiculos(); 
+                                salvarVeiculos();
                                 System.out.println("SUV cadastrado com sucesso!");
                                 break;
 
@@ -68,7 +69,7 @@ public class App {
                                 scanner.nextLine();
                                 Veiculo sedan = new Sedan(marcaSedan, modeloSedan, tarifaSedan);
                                 listaVeiculos.add(sedan);
-                                salvarVeiculos(); 
+                                salvarVeiculos();
                                 System.out.println("Sedan cadastrado com sucesso!");
                                 break;
 
@@ -82,7 +83,7 @@ public class App {
                                 scanner.nextLine();
                                 Veiculo compacto = new Compacto(marcaCompacto, modeloCompacto, tarifaCompacto);
                                 listaVeiculos.add(compacto);
-                                salvarVeiculos(); 
+                                salvarVeiculos();
                                 System.out.println("Compacto cadastrado com sucesso!");
                                 break;
 
@@ -132,16 +133,15 @@ public class App {
 
                             if (escolha >= 1 && escolha <= listaVeiculos.size()) {
                                 Veiculo veiculoEscolhido = listaVeiculos.get(escolha - 1);
-                                
+
                                 System.out.println("\nReserva confirmada!");
                                 veiculoEscolhido.exibirDetalhes();
 
-                                
                                 listaVeiculos.remove(veiculoEscolhido);
+                                listaReserva.add(veiculoEscolhido);
 
-                                
                                 salvarVeiculos();
-                                System.out.println("Veículo removido da lista e alteração salva.");
+                                System.out.println("Veículo reservado e alteração salva.");
                             } else {
                                 throw new RuntimeException("Opção inválida, tente novamente.");
                             }
@@ -150,6 +150,7 @@ public class App {
                         System.out.println(e.getMessage());
                     }
                     break;
+
                 case 4:
                     System.out.println("\nAtualizando Veículos Cadastrados");
                     try {
@@ -157,36 +158,33 @@ public class App {
                         if (listaVeiculos.isEmpty()) {
                             throw new RuntimeException("Nenhum veículo cadastrado.");
                         } else {
-                
+
                             for (int i = 0; i < listaVeiculos.size(); i++) {
                                 Veiculo veiculo = listaVeiculos.get(i);
                                 System.out.println((i + 1) + "- " + veiculo.getMarca() + " " + veiculo.getModelo());
                             }
-                
+
                             System.out.print("Escolha o número do veículo para atualizar: ");
                             int escolha = scanner.nextInt();
-                            scanner.nextLine();  
-                
+                            scanner.nextLine();
+
                             if (escolha < 1 || escolha > listaVeiculos.size()) {
                                 throw new RuntimeException("Opção inválida.");
                             }
-                
+
                             Veiculo veiculoEscolhido = listaVeiculos.get(escolha - 1);
-                
-                    
+
                             System.out.print("Nova marca: ");
                             String novaMarca = scanner.nextLine();
                             System.out.print("Novo modelo: ");
                             String novoModelo = scanner.nextLine();
                             System.out.print("Nova tarifa diária: ");
                             double novaTarifa = scanner.nextDouble();
-                            scanner.nextLine(); 
-                
-                            
+                            scanner.nextLine();
+
                             veiculoEscolhido.setMarca(novaMarca);
                             veiculoEscolhido.setModelo(novoModelo);
                             veiculoEscolhido.setTarifaDiaria(novaTarifa);
-                
 
                             salvarVeiculos();
                             System.out.println("Veículo atualizado com sucesso!");
@@ -196,8 +194,46 @@ public class App {
                     }
                     break;
 
+                case 5:
+                    System.out.println("\n=== Devolver Veículo Cadastrado ===");
+                    try {
+                        if (listaReserva.isEmpty()) {
+                            throw new RuntimeException("Nenhum veículo reservado para devolver.");
+                        } else {
+                            System.out.println("\n=== VEÍCULOS RESERVADOS ===");
+                            for (int i = 0; i < listaReserva.size(); i++) {
+                                Veiculo veiculo = listaReserva.get(i);
+                                System.out.println((i + 1) + "- ");
+                                veiculo.exibirDetalhes();
+                                System.out.println("----------------------------");
+                            }
+
+                            System.out.print("Escolha o número do veículo para devolver: ");
+                            int escolha = scanner.nextInt();
+                            scanner.nextLine();
+
+                            if (escolha >= 1 && escolha <= listaReserva.size()) {
+                                Veiculo veiculoDevolvido = listaReserva.get(escolha - 1);
+
+                                System.out.println("\nVeículo devolvido com sucesso!");
+                                veiculoDevolvido.exibirDetalhes();
+
+                                listaReserva.remove(veiculoDevolvido);
+                                listaVeiculos.add(veiculoDevolvido);
+
+                                salvarVeiculos();
+                                System.out.println("Alterações salvas com sucesso.");
+                            } else {
+                                throw new RuntimeException("Opção inválida, tente novamente.");
+                            }
+                        }
+                    } catch (RuntimeException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
                 case 6:
-                    System.out.println("\nExcluindo Veículo Cadastrado");
+                    System.out.println("\n=== Excluindo Veículo Cadastrado ===");
                     try {
                         System.out.println("\n=== VEÍCULOS CADASTRADOS ===");
                         if (listaVeiculos.isEmpty()) {
@@ -205,17 +241,21 @@ public class App {
                         } else {
                             for (int i = 0; i < listaVeiculos.size(); i++) {
                                 Veiculo veiculo = listaVeiculos.get(i);
-                                System.out.println((i + 1) + "- " + veiculo.getMarca() + " " + veiculo.getModelo());
+                                System.out.println((i + 1) + "- ");
+                                veiculo.exibirDetalhes();
                             }
+
                             System.out.print("Escolha o número do veículo para excluir: ");
                             int escolha = scanner.nextInt();
-                            scanner.nextLine(); 
+                            scanner.nextLine();
+
                             if (escolha < 1 || escolha > listaVeiculos.size()) {
                                 throw new RuntimeException("Opção inválida.");
                             }
-                
+
                             Veiculo veiculoEscolhido = listaVeiculos.get(escolha - 1);
-                            listaVeiculos.remove(veiculoEscolhido); 
+                            listaVeiculos.remove(veiculoEscolhido);
+
                             salvarVeiculos();
                             System.out.println("Veículo excluído com sucesso!");
                         }
@@ -223,44 +263,37 @@ public class App {
                         System.out.println(e.getMessage());
                     }
                     break;
+
                 case 0:
-                    System.out.println("Você escolheu a opção 0. Saindo do programa...");
+                    System.out.println("Saindo do programa...");
                     break;
 
                 default:
-                    System.out.println("Opção inválida, digite novamente.");
+                    System.out.println("Opção inválida. Tente novamente.");
                     break;
             }
-
         } while (opcao != 0);
-
-        scanner.close();
     }
 
-
-    private static void salvarVeiculos() {
-        try (FileWriter writer = new FileWriter(ARQUIVO_JSON)) {
-            Gson gson = new Gson();
-            gson.toJson(listaVeiculos, writer);
-        } catch (IOException e) {
-            System.out.println("Erro ao salvar os veículos no arquivo: " + e.getMessage());
+    private static void carregarVeiculos() {
+        File arquivo = new File(ARQUIVO_JSON);
+        if (arquivo.exists()) {
+            try (Reader reader = new FileReader(ARQUIVO_JSON)) {
+                Gson gson = new Gson();
+                Type tipoListaVeiculos = new TypeToken<List<Veiculo>>(){}.getType();
+                listaVeiculos = gson.fromJson(reader, tipoListaVeiculos);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-
-    private static void carregarVeiculos() {
-        File file = new File(ARQUIVO_JSON);
-        if (file.exists()) {
-            try (FileReader reader = new FileReader(ARQUIVO_JSON)) {
-                Gson gson = new Gson();
-                Type listType = new TypeToken<List<Veiculo>>(){}.getType();
-                listaVeiculos = gson.fromJson(reader, listType);
-                if (listaVeiculos == null) {
-                    listaVeiculos = new ArrayList<>(); 
-                }
-            } catch (IOException e) {
-                System.out.println("Erro ao carregar os veículos do arquivo: " + e.getMessage());
-            }
+    private static void salvarVeiculos() {
+        try (Writer writer = new FileWriter(ARQUIVO_JSON)) {
+            Gson gson = new Gson();
+            gson.toJson(listaVeiculos, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
