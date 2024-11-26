@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.*;
 import java.lang.reflect.Type;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -54,6 +53,7 @@ public class App {
                                 System.out.print("Qual o valor da tarifa diária? ");
                                 double tarifaSuv = scanner.nextDouble();
                                 scanner.nextLine();
+                                
                                 Veiculo suv = new Suv(marcaSuv, modeloSuv, tarifaSuv);
                                 listaVeiculos.add(suv);
                                 salvarVeiculos();
@@ -68,6 +68,7 @@ public class App {
                                 System.out.print("Qual o valor da tarifa diária? ");
                                 double tarifaSedan = scanner.nextDouble();
                                 scanner.nextLine();
+                                
                                 Veiculo sedan = new Sedan(marcaSedan, modeloSedan, tarifaSedan);
                                 listaVeiculos.add(sedan);
                                 salvarVeiculos();
@@ -126,38 +127,33 @@ public class App {
                                 Veiculo veiculo = listaVeiculos.get(i);
                                 System.out.println((i + 1) + "- ");
                                 veiculo.exibirDetalhes();
-                            }
-
-                            System.out.print("Escolha o número do veículo para reserva: ");
-                            int escolha = scanner.nextInt();
-                            scanner.nextLine();
-
-                            if (escolha >= 1 && escolha <= listaVeiculos.size()) {
-                                Veiculo veiculoEscolhido = listaVeiculos.get(escolha - 1);
-
-                                System.out.print("Quantos dias você deseja reservar o veículo? ");
-                                int diasReserva = scanner.nextInt();
-                                scanner.nextLine();
-
-                                veiculoEscolhido.setDiasReservados(diasReserva);
-                                veiculoEscolhido.setDataReserva(LocalDate.now());
-
-                                System.out.println("\nReserva confirmada!");
-                                veiculoEscolhido.exibirDetalhes();
-
-                                listaVeiculos.remove(veiculoEscolhido);
-                                listaReserva.add(veiculoEscolhido);
-
-                                salvarVeiculos();
-                                System.out.println("Veículo reservado e alteração salva.");
-                            } else {
-                                throw new RuntimeException("Opção inválida, tente novamente.");
-                            }
                         }
-                    } catch (RuntimeException e) {
-                        System.out.println(e.getMessage());
+
+                        System.out.print("Escolha o número do veículo para reserva: ");
+                        int escolha = scanner.nextInt();
+                        scanner.nextLine();
+
+                        if (escolha <= 0 || escolha > listaVeiculos.size()) {
+                            throw new RuntimeException("Opção inválida, tente novamente.");
+                        }
+                        Veiculo veiculoEscolhido = listaVeiculos.get(escolha - 1);
+ 
+                
+                        System.out.println("\nReserva confirmada!");
+                        veiculoEscolhido.exibirDetalhes();  
+                
+                                
+                        listaVeiculos.remove(veiculoEscolhido);
+                        listaReserva.add(veiculoEscolhido);
+                
+                        salvarVeiculos(); 
+                        
+                
                     }
-                    break;
+                } catch (RuntimeException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
 
                 case 4:
                     System.out.println("\nAtualizando Veículos Cadastrados");
@@ -202,7 +198,7 @@ public class App {
                     }
                     break;
 
-                case 5:
+                    case 5:
                     System.out.println("\n=== Devolver Veículo Cadastrado ===");
                     try {
                         if (listaReserva.isEmpty()) {
@@ -215,29 +211,33 @@ public class App {
                                 veiculo.exibirDetalhes();
                                 System.out.println("----------------------------");
                             }
-
+                            
+                
                             System.out.print("Escolha o número do veículo para devolver: ");
                             int escolha = scanner.nextInt();
                             scanner.nextLine();
-
+                
                             if (escolha >= 1 && escolha <= listaReserva.size()) {
                                 Veiculo veiculoDevolvido = listaReserva.get(escolha - 1);
-
+                
+                        
                                 System.out.print("Quantos dias o veículo foi reservado? ");
                                 int diasDevolucao = scanner.nextInt();
                                 scanner.nextLine();
-
-                                double valorTotal = veiculoDevolvido.calcularValorReserva();
+                
+                                
+                                double valorTotal = veiculoDevolvido.getTarifaDiaria() * diasDevolucao;
                                 System.out.println("O valor total da reserva é: R$ " + valorTotal);
-
+                
+                                
                                 System.out.println("\nVeículo devolvido com sucesso!");
                                 veiculoDevolvido.exibirDetalhes();
-
                                 listaReserva.remove(veiculoDevolvido);
                                 listaVeiculos.add(veiculoDevolvido);
-
-                                salvarVeiculos();
-                                System.out.println("Alterações salvas com sucesso.");
+                
+                                
+                                salvarVeiculos();  
+                                
                             } else {
                                 throw new RuntimeException("Opção inválida, tente novamente.");
                             }
@@ -246,6 +246,7 @@ public class App {
                         System.out.println(e.getMessage());
                     }
                     break;
+                
 
                 case 6:
                     System.out.println("\n=== Excluindo Veículo Cadastrado ===");
@@ -296,7 +297,8 @@ public class App {
             if (file.exists()) {
                 FileReader reader = new FileReader(file);
                 Gson gson = new Gson();
-                Type listType = new TypeToken<List<Veiculo>>(){}.getType();
+                Type listType = new TypeToken<List<Veiculo>>() {
+                }.getType();
                 listaVeiculos = gson.fromJson(reader, listType);
                 reader.close();
             }

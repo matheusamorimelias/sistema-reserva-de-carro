@@ -2,14 +2,16 @@ package com.devonigiri;
 
 public class Veiculo {
 
-    private String marca;          
-    private String modelo;         
-    private double tarifaDiaria;   
-
+    private String marca;
+    private String modelo;
+    private double tarifaDiaria;
+    private int diasReservados; 
+    
     public Veiculo(String marca, String modelo, double tarifaDiaria) {
         this.marca = marca;
         this.modelo = modelo;
         this.tarifaDiaria = tarifaDiaria;
+        this.diasReservados = 0; 
     }
 
     
@@ -21,7 +23,6 @@ public class Veiculo {
         this.marca = marca;
     }
 
-
     public String getModelo() {
         return modelo;
     }
@@ -29,7 +30,6 @@ public class Veiculo {
     public void setModelo(String modelo) {
         this.modelo = modelo;
     }
-
 
     public double getTarifaDiaria() {
         return tarifaDiaria;
@@ -39,12 +39,24 @@ public class Veiculo {
         this.tarifaDiaria = tarifaDiaria;
     }
 
-
-    public void exibirDetalhes() {
-        
-        System.out.println("Marca: " + this.marca);
-        System.out.println("Modelo: " + this.modelo);
-        System.out.println("Tarifa Diária: R$ " + this.tarifaDiaria);
+    public int getDiasReservados() {
+        return diasReservados;
     }
+
+    public void setDiasReservados(int diasReservados) {
+        this.diasReservados = diasReservados;
+    }
+
     
+    public void exibirDetalhes() {
+        System.out.println("Marca: " + marca);
+        System.out.println("Modelo: " + modelo);
+        System.out.println("Tarifa Diária: R$ " + tarifaDiaria);
+        
+    }
+
+    
+    public double calcularValorReserva() {
+        return tarifaDiaria * diasReservados;
+    }
 }
