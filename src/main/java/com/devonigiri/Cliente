@@ -155,22 +155,21 @@ public class Cliente {
     public void setReservasPassadas(List<Reserva> reservasPassadas) {
         this.reservasPassadas = reservasPassadas;
     }
-}
 
-        //Adicionar uma reserva para ativa
-        public void adicionarReservaAtiva(Reserva reserva) {
+     //Adicionar uma reserva para ativa
+     public void adicionarReservaAtiva(Reserva reserva) {
             this.reservasAtivas.add(reserva);
         }
 
-        //Verificar se tem idade para alugar
-        public boolean podeAlugarCarro() {
+     //Verificar se tem idade para alugar
+     public boolean podeAlugarCarro() {
             LocalDate idadeMinima = LocalDate.now().minusYears(18);
             return this.dataNascimento.isBefore(idadeMinima);
         }
 
-        //Adicionar reserva ao histórico do cliente
-        public void moverReservaParaPassada(Reserva reserva) {
+      //Adicionar reserva ao histórico do cliente
+      public void moverReservaParaPassada(Reserva reserva) {
             this.reservasAtivas.remove(reserva);
             this.reservasPassadas.add(reserva);
         }
-    }
+}
