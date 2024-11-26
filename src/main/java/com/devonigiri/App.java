@@ -226,6 +226,11 @@ public class App {
                                 scanner.nextLine();
                 
                                 
+                                if (diasDevolucao <= 0) {
+                                    throw new RuntimeException("O número de dias de devolução deve ser maior que zero.");
+                                }
+                
+                                
                                 double valorTotal = veiculoDevolvido.getTarifaDiaria() * diasDevolucao;
                                 System.out.println("O valor total da reserva é: R$ " + valorTotal);
                 

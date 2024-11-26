@@ -54,9 +54,4 @@ public class Veiculo {
         System.out.println("Tarifa Diária: R$ " + tarifaDiaria);
         
     }
-
-    
-    public double calcularValorReserva() {
-        return tarifaDiaria * diasReservados;
-    }
 }
