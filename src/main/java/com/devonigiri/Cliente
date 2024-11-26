@@ -19,7 +19,7 @@ public class Cliente {
     //Construtores
 
     public Cliente() {
-        
+
     }
 
     public Cliente(String nome, String email, int id, String senha, String endereco, String telefone, LocalDate dataNascimento, List<Reserva> reservasAtivas, List<Reserva> reservasPassadas) {
@@ -34,49 +34,49 @@ public class Cliente {
         this.reservasPassadas = reservasPassadas;
     }
 
-    public Cliente(String nome, String email, int id, String senha, String endereco, String telefone, LocalDate dataNascimento) {
+    public Cliente(String nome, String email, int id, String senha, String endereco, String telefone, List<Reserva> reservasAtivas, List<Reserva> reservasPassadas) {
         this.nome = nome;
         this.email = email;
         this.id = id;
         this.senha = senha;
         this.endereco = endereco;
         this.telefone = telefone;
-        this.dataNascimento = dataNascimento;
+        this.reservasAtivas = reservasAtivas;
+        this.reservasPassadas = reservasPassadas;
     }
 
-    public Cliente(String nome, String email, int id, String senha, String endereco, String telefone) {
+    public Cliente(String nome, String email, int id, String senha, String endereco,List<Reserva> reservasAtivas, List<Reserva> reservasPassadas) {
         this.nome = nome;
         this.email = email;
         this.id = id;
         this.senha = senha;
         this.endereco = endereco;
-        this.telefone = telefone;
+        this.reservasAtivas = reservasAtivas;
+        this.reservasPassadas = reservasPassadas;
     }
 
-    public Cliente(String nome, String email, int id, String senha, String endereco) {
+    public Cliente(String nome, String email, int id, String senha, List<Reserva> reservasAtivas, List<Reserva> reservasPassadas) {
         this.nome = nome;
         this.email = email;
         this.id = id;
         this.senha = senha;
-        this.endereco = endereco;
+        this.reservasAtivas = reservasAtivas;
+        this.reservasPassadas = reservasPassadas;
     }
 
-    public Cliente(String nome, String email, int id, String senha) {
+    public Cliente(String nome, String email, int id, List<Reserva> reservasAtivas, List<Reserva> reservasPassadas) {
         this.nome = nome;
         this.email = email;
         this.id = id;
-        this.senha = senha;
+        this.reservasAtivas = reservasAtivas;
+        this.reservasPassadas = reservasPassadas;
     }
 
-    public Cliente(String nome, String email, int id) {
+    public Cliente(String nome, String email,List<Reserva> reservasAtivas, List<Reserva> reservasPassadas) {
         this.nome = nome;
         this.email = email;
-        this.id = id;
-    }
-
-    public Cliente(String nome, String email) {
-        this.nome = nome;
-        this.email = email;
+        this.reservasAtivas = reservasAtivas;
+        this.reservasPassadas = reservasPassadas;
     }
 
     public Cliente(List<Reserva> reservasAtivas, List<Reserva> reservasPassadas) {
@@ -156,20 +156,23 @@ public class Cliente {
         this.reservasPassadas = reservasPassadas;
     }
 
-     //Adicionar uma reserva para ativa
-     public void adicionarReservaAtiva(Reserva reserva) {
-            this.reservasAtivas.add(reserva);
+    //Adicionar uma reserva para ativa
+    public void adicionarReservaAtiva(Reserva reserva) {
+        if (this.reservasAtivas == null) {
+            this.reservasAtivas = new ArrayList<>();
         }
+        this.reservasAtivas.add(reserva);
+    }
 
-     //Verificar se tem idade para alugar
-     public boolean podeAlugarCarro() {
-            LocalDate idadeMinima = LocalDate.now().minusYears(18);
-            return this.dataNascimento.isBefore(idadeMinima);
-        }
+    //Verificar se tem idade para alugar
+    public boolean podeAlugarCarro() {
+        LocalDate idadeMinima = LocalDate.now().minusYears(18);
+        return this.dataNascimento.isBefore(idadeMinima);
+    }
 
-      //Adicionar reserva ao histórico do cliente
-      public void moverReservaParaPassada(Reserva reserva) {
-            this.reservasAtivas.remove(reserva);
-            this.reservasPassadas.add(reserva);
-        }
+    //Adicionar reserva ao histórico do cliente
+    public void moverReservaParaPassada(Reserva reserva) {
+        this.reservasAtivas.remove(reserva);
+        this.reservasPassadas.add(reserva);
+    }
 }
