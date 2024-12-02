@@ -50,90 +50,97 @@ public class App {
                                 String marcaSuv = scanner.nextLine();
                                 System.out.print("Qual o modelo? ");
                                 String modeloSuv = scanner.nextLine();
+                                System.out.print("Tem direção automatica? ");
+                                String direcaoAutomatica = scanner.nextLine();
                                 System.out.print("Qual o valor da tarifa diária? ");
                                 double tarifaSuv = scanner.nextDouble();
                                 scanner.nextLine();
                                 System.out.println("\n Cadastrando...:");
                                 System.out.println("Marca: " + marcaSuv);
                                 System.out.println("Modelo: " + modeloSuv);
+                                System.out.println("Direção Automática: " + direcaoAutomatica);
                                 System.out.println("Tarifa diária: R$ " + tarifaSuv);
 
 
-                                System.out.print("Deseja confirmar o cadastro? (Sim/Não): ");
+                                System.out.print("Deseja confirmar o cadastro? (S/N): ");
                                 String confirmacao = scanner.nextLine();
 
-                                if (confirmacao.equalsIgnoreCase("Sim")) {
-                                    Veiculo suv = new Suv(marcaSuv, modeloSuv, tarifaSuv);
+                                if (confirmacao.equalsIgnoreCase("S")) {
+                                    System.out.println("Cadastro confirmado!");
+                                    Veiculo suv = new Suv(marcaSuv, modeloSuv, tarifaSuv, direcaoAutomatica);
                                     listaVeiculos.add(suv);
                                     salvarVeiculos();
                                     System.out.println("SUV cadastrado com sucesso!");
-                                    break;
             
                                 } else {
                                     System.out.println("Cadastro cancelado.");
                                 }
+                                
+                                break;
 
                             case 2:
                                 System.out.print("Qual a marca? ");
                                 String marcaSedan = scanner.nextLine();
                                 System.out.print("Qual o modelo? ");
                                 String modeloSedan = scanner.nextLine();
+                                System.out.print("Tem AR Condicionado? ");
+                                String arcondicionado = scanner.nextLine();
                                 System.out.print("Qual o valor da tarifa diária? ");
                                 double tarifaSedan = scanner.nextDouble();
+                                scanner.nextLine();
                                 System.out.println("\n Cadastrando...:");
                                 System.out.println("Marca: " + marcaSedan);
                                 System.out.println("Modelo: " + modeloSedan);
+                                System.out.println("AR Condicionado: " + arcondicionado);
+
                                 System.out.println("Tarifa diária: R$ " + tarifaSedan);
 
 
-                                System.out.print("Deseja confirmar o cadastro? (Sim/Não): ");
+                                System.out.print("Deseja confirmar o cadastro? (S/N): ");
                                 String confirmacao2 = scanner.nextLine();
 
-                                if (confirmacao2.equalsIgnoreCase("Sim")) {
-                                    Veiculo sedan = new Sedan(marcaSedan, modeloSedan, tarifaSedan);
+                                if (confirmacao2.equalsIgnoreCase("S")) {
+                                    System.out.println("Cadastro confirmado!");
+                                    Veiculo sedan = new Sedan(marcaSedan, modeloSedan, tarifaSedan, arcondicionado);
                                     listaVeiculos.add(sedan);
                                     salvarVeiculos();
                                     System.out.println("Sedan cadastrado com sucesso!");
-                                    break;
                                 } else {
                                     System.out.println("Cadastro cancelado.");
                                 }
-                                Veiculo sedan = new Sedan(marcaSedan, modeloSedan, tarifaSedan);
-                                listaVeiculos.add(sedan);
-                                salvarVeiculos();
-                                System.out.println("Sedan cadastrado com sucesso!");
+                                
                                 break;
                             case 3:
                                 System.out.print("Qual a marca? ");
                                 String marcaCompacto = scanner.nextLine();
                                 System.out.print("Qual o modelo? ");
                                 String modeloCompacto = scanner.nextLine();
+                                System.out.print("Tem GPS? ");
+                                String gps = scanner.nextLine();
                                 System.out.print("Qual o valor da tarifa diária? ");
                                 double tarifaCompacto = scanner.nextDouble();
                                 scanner.nextLine();
                                 System.out.println("\n Cadastrando...:");
                                 System.out.println("Marca: " + marcaCompacto);
                                 System.out.println("Modelo: " + modeloCompacto);
+                                System.out.println("GPs: " + gps);
                                 System.out.println("Tarifa diária: R$ " + tarifaCompacto);
 
 
-                                System.out.print("Deseja confirmar o cadastro? (Sim/Não): ");
+                                System.out.print("Deseja confirmar o cadastro? (S/N): ");
                                 String confirmacao3 = scanner.nextLine();
 
-                                if (confirmacao3.equalsIgnoreCase("Sim")) {
-                                    Veiculo compacto = new Compacto(marcaCompacto, modeloCompacto, tarifaCompacto);
+                                if (confirmacao3.equalsIgnoreCase("S")) {
+                                    System.out.println("Cadastro confirmado!");
+                                    Veiculo compacto = new Compacto(marcaCompacto, modeloCompacto, tarifaCompacto, gps);
                                     listaVeiculos.add(compacto);
                                     salvarVeiculos();
                                     System.out.println("Compacto cadastrado com sucesso!");
-                                    break;
             
                                 } else {
                                     System.out.println("Cadastro cancelado.");
                                 }
-                                Veiculo compacto = new Compacto(marcaCompacto, modeloCompacto, tarifaCompacto);
-                                listaVeiculos.add(compacto);
-                                salvarVeiculos();
-                                System.out.println("Compacto cadastrado com sucesso!");
+                                
                                 break;
 
 
@@ -165,7 +172,7 @@ public class App {
                     }
                     break;
 
-                    case 3:
+                case 3:
                     System.out.println("\n=== RESERVAR VEÍCULO ===");
                     try {
                         if (listaVeiculos.isEmpty()) {
@@ -193,8 +200,7 @@ public class App {
                 
                             System.out.println("\nReserva confirmada!");
                             veiculoEscolhido.exibirDetalhes();
-                            System.out.println("-------------------------");
-                
+                            System.out.println("-------------------------");                
                             listaVeiculos.remove(veiculoEscolhido);
                             listaReserva.add(veiculoEscolhido);
                             salvarVeiculos();
@@ -253,7 +259,7 @@ public class App {
                     }
                     break;
 
-                    case 5:
+                case 5:
                     System.out.println("\n=== Devolver Veículo Cadastrado ===");
                     try {
                         if (listaReserva.isEmpty()) {
@@ -327,10 +333,16 @@ public class App {
                             if (escolha < 1 || escolha > listaVeiculos.size()) {
                                 throw new RuntimeException("Opção inválida.");
                             }
-
-                            listaVeiculos.remove(escolha - 1);
-                            salvarVeiculos();
-                            System.out.println("Veículo excluído com sucesso.");
+                            Veiculo veiculoEscolhido = listaVeiculos.get(escolha - 1);
+                            System.out.print("Tem certeza que deseja excluir este veículo? (S/N): ");
+                            String confirmar = scanner.nextLine().toUpperCase();
+                            if (confirmar.equals("S")) {
+                                listaVeiculos.remove(veiculoEscolhido);
+                                salvarVeiculos();
+                                System.out.println("Veículo excluído com sucesso.");
+                            } else {
+                                System.out.println("Processo de Exclusão cancelado.");
+                            }
                         }
                     } catch (RuntimeException e) {
                         System.out.println(e.getMessage());
