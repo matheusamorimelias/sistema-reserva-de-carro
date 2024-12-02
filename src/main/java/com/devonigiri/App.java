@@ -63,16 +63,15 @@ public class App {
                                 String confirmacao = scanner.nextLine();
 
                                 if (confirmacao.equalsIgnoreCase("Sim")) {
-                                    System.out.println("Cadastro confirmado!");
+                                    Veiculo suv = new Suv(marcaSuv, modeloSuv, tarifaSuv);
+                                    listaVeiculos.add(suv);
+                                    salvarVeiculos();
+                                    System.out.println("SUV cadastrado com sucesso!");
+                                    break;
             
                                 } else {
                                     System.out.println("Cadastro cancelado.");
                                 }
-                                Veiculo suv = new Suv(marcaSuv, modeloSuv, tarifaSuv);
-                                listaVeiculos.add(suv);
-                                salvarVeiculos();
-                                System.out.println("SUV cadastrado com sucesso!");
-                                break;
 
                             case 2:
                                 System.out.print("Qual a marca? ");
@@ -91,7 +90,11 @@ public class App {
                                 String confirmacao2 = scanner.nextLine();
 
                                 if (confirmacao2.equalsIgnoreCase("Sim")) {
-                                    System.out.println("Cadastro confirmado!");
+                                    Veiculo sedan = new Sedan(marcaSedan, modeloSedan, tarifaSedan);
+                                    listaVeiculos.add(sedan);
+                                    salvarVeiculos();
+                                    System.out.println("Sedan cadastrado com sucesso!");
+                                    break;
                                 } else {
                                     System.out.println("Cadastro cancelado.");
                                 }
@@ -118,7 +121,11 @@ public class App {
                                 String confirmacao3 = scanner.nextLine();
 
                                 if (confirmacao3.equalsIgnoreCase("Sim")) {
-                                    System.out.println("Cadastro confirmado!");
+                                    Veiculo compacto = new Compacto(marcaCompacto, modeloCompacto, tarifaCompacto);
+                                    listaVeiculos.add(compacto);
+                                    salvarVeiculos();
+                                    System.out.println("Compacto cadastrado com sucesso!");
+                                    break;
             
                                 } else {
                                     System.out.println("Cadastro cancelado.");
