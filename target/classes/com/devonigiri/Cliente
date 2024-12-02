@@ -1,0 +1,177 @@
+package entities;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.time.LocalDate;
+
+public class Cliente {
+
+    private String nome;
+    private String email;
+    private int id;
+    private String senha;
+    private String endereco;
+    private String telefone;
+    private LocalDate dataNascimento;
+    private List<Reserva> reservasAtivas;
+    private List<Reserva>  reservasPassadas;
+
+
+    public Cliente() {
+
+    }
+
+    public Cliente(String nome, String email, int id, String senha, String endereco, String telefone, LocalDate dataNascimento, List<Reserva> reservasAtivas, List<Reserva> reservasPassadas) {
+        this.nome = nome;
+        this.email = email;
+        this.id = id;
+        this.senha = senha;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.dataNascimento = dataNascimento;
+        this.reservasAtivas = reservasAtivas;
+        this.reservasPassadas = reservasPassadas;
+    }
+
+    public Cliente(String nome, String email, int id, String senha, String endereco, String telefone, List<Reserva> reservasAtivas, List<Reserva> reservasPassadas) {
+        this.nome = nome;
+        this.email = email;
+        this.id = id;
+        this.senha = senha;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.reservasAtivas = reservasAtivas;
+        this.reservasPassadas = reservasPassadas;
+    }
+
+    public Cliente(String nome, String email, int id, String senha, String endereco,List<Reserva> reservasAtivas, List<Reserva> reservasPassadas) {
+        this.nome = nome;
+        this.email = email;
+        this.id = id;
+        this.senha = senha;
+        this.endereco = endereco;
+        this.reservasAtivas = reservasAtivas;
+        this.reservasPassadas = reservasPassadas;
+    }
+
+    public Cliente(String nome, String email, int id, String senha, List<Reserva> reservasAtivas, List<Reserva> reservasPassadas) {
+        this.nome = nome;
+        this.email = email;
+        this.id = id;
+        this.senha = senha;
+        this.reservasAtivas = reservasAtivas;
+        this.reservasPassadas = reservasPassadas;
+    }
+
+    public Cliente(String nome, String email, int id, List<Reserva> reservasAtivas, List<Reserva> reservasPassadas) {
+        this.nome = nome;
+        this.email = email;
+        this.id = id;
+        this.reservasAtivas = reservasAtivas;
+        this.reservasPassadas = reservasPassadas;
+    }
+
+    public Cliente(String nome, String email,List<Reserva> reservasAtivas, List<Reserva> reservasPassadas) {
+        this.nome = nome;
+        this.email = email;
+        this.reservasAtivas = reservasAtivas;
+        this.reservasPassadas = reservasPassadas;
+    }
+
+    public Cliente(List<Reserva> reservasAtivas, List<Reserva> reservasPassadas) {
+        this.reservasAtivas = reservasAtivas;
+        this.reservasPassadas = reservasPassadas;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public List<Reserva> getReservasAtivas() {
+        return reservasAtivas;
+    }
+
+    public void setReservasAtivas(List<Reserva> reservasAtivas) {
+        this.reservasAtivas = reservasAtivas;
+    }
+
+    public List<Reserva> getReservasPassadas() {
+        return reservasPassadas;
+    }
+
+    public void setReservasPassadas(List<Reserva> reservasPassadas) {
+        this.reservasPassadas = reservasPassadas;
+    }
+
+   
+    public void adicionarReservaAtiva(Reserva reserva) {
+        if (this.reservasAtivas == null) {
+            this.reservasAtivas = new ArrayList<>();
+        }
+        this.reservasAtivas.add(reserva);
+    }
+
+   
+    public boolean podeAlugarCarro() {
+        LocalDate idadeMinima = LocalDate.now().minusYears(18);
+        return this.dataNascimento.isBefore(idadeMinima);
+    }
+
+    
+    public void moverReservaParaPassada(Reserva reserva) {
+        this.reservasAtivas.remove(reserva);
+        this.reservasPassadas.add(reserva);
+    }
+}

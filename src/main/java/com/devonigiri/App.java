@@ -53,7 +53,21 @@ public class App {
                                 System.out.print("Qual o valor da tarifa diária? ");
                                 double tarifaSuv = scanner.nextDouble();
                                 scanner.nextLine();
-                                
+                                System.out.println("\n Cadastrando...:");
+                                System.out.println("Marca: " + marcaSuv);
+                                System.out.println("Modelo: " + modeloSuv);
+                                System.out.println("Tarifa diária: R$ " + tarifaSuv);
+
+
+                                System.out.print("Deseja confirmar o cadastro? (Sim/Não): ");
+                                String confirmacao = scanner.nextLine();
+
+                                if (confirmacao.equalsIgnoreCase("Sim")) {
+                                    System.out.println("Cadastro confirmado!");
+            
+                                } else {
+                                    System.out.println("Cadastro cancelado.");
+                                }
                                 Veiculo suv = new Suv(marcaSuv, modeloSuv, tarifaSuv);
                                 listaVeiculos.add(suv);
                                 salvarVeiculos();
@@ -67,14 +81,25 @@ public class App {
                                 String modeloSedan = scanner.nextLine();
                                 System.out.print("Qual o valor da tarifa diária? ");
                                 double tarifaSedan = scanner.nextDouble();
-                                scanner.nextLine();
-                                
+                                System.out.println("\n Cadastrando...:");
+                                System.out.println("Marca: " + marcaSedan);
+                                System.out.println("Modelo: " + modeloSedan);
+                                System.out.println("Tarifa diária: R$ " + tarifaSedan);
+
+
+                                System.out.print("Deseja confirmar o cadastro? (Sim/Não): ");
+                                String confirmacao2 = scanner.nextLine();
+
+                                if (confirmacao2.equalsIgnoreCase("Sim")) {
+                                    System.out.println("Cadastro confirmado!");
+                                } else {
+                                    System.out.println("Cadastro cancelado.");
+                                }
                                 Veiculo sedan = new Sedan(marcaSedan, modeloSedan, tarifaSedan);
                                 listaVeiculos.add(sedan);
                                 salvarVeiculos();
                                 System.out.println("Sedan cadastrado com sucesso!");
                                 break;
-
                             case 3:
                                 System.out.print("Qual a marca? ");
                                 String marcaCompacto = scanner.nextLine();
@@ -83,11 +108,27 @@ public class App {
                                 System.out.print("Qual o valor da tarifa diária? ");
                                 double tarifaCompacto = scanner.nextDouble();
                                 scanner.nextLine();
+                                System.out.println("\n Cadastrando...:");
+                                System.out.println("Marca: " + marcaCompacto);
+                                System.out.println("Modelo: " + modeloCompacto);
+                                System.out.println("Tarifa diária: R$ " + tarifaCompacto);
+
+
+                                System.out.print("Deseja confirmar o cadastro? (Sim/Não): ");
+                                String confirmacao3 = scanner.nextLine();
+
+                                if (confirmacao3.equalsIgnoreCase("Sim")) {
+                                    System.out.println("Cadastro confirmado!");
+            
+                                } else {
+                                    System.out.println("Cadastro cancelado.");
+                                }
                                 Veiculo compacto = new Compacto(marcaCompacto, modeloCompacto, tarifaCompacto);
                                 listaVeiculos.add(compacto);
                                 salvarVeiculos();
                                 System.out.println("Compacto cadastrado com sucesso!");
                                 break;
+
 
                             case 0:
                                 System.out.println("Voltando ao menu principal...");
@@ -117,44 +158,45 @@ public class App {
                     }
                     break;
 
-                case 3:
+                    case 3:
                     System.out.println("\n=== RESERVAR VEÍCULO ===");
                     try {
                         if (listaVeiculos.isEmpty()) {
                             throw new RuntimeException("Nenhum veículo disponível para reserva.");
                         } else {
-                            for (int i = 0; i < listaVeiculos.size(); i++) {
-                                Veiculo veiculo = listaVeiculos.get(i);
-                                System.out.println((i + 1) + "- ");
-                                veiculo.exibirDetalhes();
+                            int escolha = -1;
+                            while (escolha <= 0 || escolha > listaVeiculos.size()) {
+                                for (int i = 0; i < listaVeiculos.size(); i++) {
+                                    Veiculo veiculo = listaVeiculos.get(i);
+                                    System.out.println("Veículos Disponiveis Para a Reserva");
+                                    System.out.println((i + 1) + "- ");
+                                    veiculo.exibirDetalhes();
+                                }
+                
+                                System.out.print("Escolha o número do veículo para reserva: ");
+                                escolha = scanner.nextInt();
+                                scanner.nextLine();
+                
+                                if (escolha <= 0 || escolha > listaVeiculos.size()) {
+                                    System.out.println("Opção inválida, tente novamente.");
+                                }
+                            }
+                
+                            Veiculo veiculoEscolhido = listaVeiculos.get(escolha - 1);
+                
+                            System.out.println("\nReserva confirmada!");
+                            veiculoEscolhido.exibirDetalhes();
+                            System.out.println("-------------------------");
+                
+                            listaVeiculos.remove(veiculoEscolhido);
+                            listaReserva.add(veiculoEscolhido);
+                            salvarVeiculos();
                         }
-
-                        System.out.print("Escolha o número do veículo para reserva: ");
-                        int escolha = scanner.nextInt();
-                        scanner.nextLine();
-
-                        if (escolha <= 0 || escolha > listaVeiculos.size()) {
-                            throw new RuntimeException("Opção inválida, tente novamente.");
-                        }
-                        Veiculo veiculoEscolhido = listaVeiculos.get(escolha - 1);
- 
-                
-                        System.out.println("\nReserva confirmada!");
-                        veiculoEscolhido.exibirDetalhes();  
-                
-                                
-                        listaVeiculos.remove(veiculoEscolhido);
-                        listaReserva.add(veiculoEscolhido);
-                
-                        salvarVeiculos(); 
-                        
-                
+                    } catch (RuntimeException e) {
+                        System.out.println(e.getMessage());
                     }
-                } catch (RuntimeException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-
+                    break;
+                
                 case 4:
                     System.out.println("\nAtualizando Veículos Cadastrados");
                     try {
@@ -162,16 +204,22 @@ public class App {
                         if (listaVeiculos.isEmpty()) {
                             throw new RuntimeException("Nenhum veículo cadastrado.");
                         } else {
-
+                            int escolha = -1;
                             for (int i = 0; i < listaVeiculos.size(); i++) {
                                 Veiculo veiculo = listaVeiculos.get(i);
                                 System.out.println((i + 1) + "- " + veiculo.getMarca() + " " + veiculo.getModelo());
                             }
-
-                            System.out.print("Escolha o número do veículo para atualizar: ");
-                            int escolha = scanner.nextInt();
-                            scanner.nextLine();
-
+                                while (escolha <= 0 || escolha > listaVeiculos.size()) {
+                                    System.out.print("Escolha o número do veículo para atualizar: ");
+                                    escolha = scanner.nextInt();
+                                    scanner.nextLine();  
+                    
+                                    if (escolha < 1 || escolha > listaVeiculos.size()) {
+                                        System.out.println("Opção inválida. Por favor, escolha uma opção Valida válido.");
+                                        escolha = scanner.nextInt();
+                                        scanner.nextLine();
+                                    }
+                                }
                             if (escolha < 1 || escolha > listaVeiculos.size()) {
                                 throw new RuntimeException("Opção inválida.");
                             }
@@ -193,7 +241,7 @@ public class App {
                             salvarVeiculos();
                             System.out.println("Veículo atualizado com sucesso!");
                         }
-                    } catch (RuntimeException e) {
+                    }catch (RuntimeException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -204,6 +252,7 @@ public class App {
                         if (listaReserva.isEmpty()) {
                             throw new RuntimeException("Nenhum veículo reservado para devolver.");
                         } else {
+                            int escolha = -1;
                             System.out.println("\n=== VEÍCULOS RESERVADOS ===");
                             for (int i = 0; i < listaReserva.size(); i++) {
                                 Veiculo veiculo = listaReserva.get(i);
@@ -211,41 +260,37 @@ public class App {
                                 veiculo.exibirDetalhes();
                                 System.out.println("----------------------------");
                             }
+                
                             
-                
-                            System.out.print("Escolha o número do veículo para devolver: ");
-                            int escolha = scanner.nextInt();
-                            scanner.nextLine();
-                
-                            if (escolha >= 1 && escolha <= listaReserva.size()) {
-                                Veiculo veiculoDevolvido = listaReserva.get(escolha - 1);
-                
-                        
-                                System.out.print("Quantos dias o veículo foi reservado? ");
-                                int diasDevolucao = scanner.nextInt();
+                            while (escolha <= 0 || escolha > listaReserva.size()) {
+                                System.out.print("Escolha o número do veículo para devolver: ");
+                                escolha = scanner.nextInt();
                                 scanner.nextLine();
                 
-                                
-                                if (diasDevolucao <= 0) {
-                                    throw new RuntimeException("O número de dias de devolução deve ser maior que zero.");
+                                if (escolha <= 0 || escolha > listaReserva.size()) {
+                                    System.out.println("Opção inválida, tente novamente.");
                                 }
-                
-                                
-                                double valorTotal = veiculoDevolvido.getTarifaDiaria() * diasDevolucao;
-                                System.out.println("O valor total da reserva é: R$ " + valorTotal);
-                
-                                
-                                System.out.println("\nVeículo devolvido com sucesso!");
-                                veiculoDevolvido.exibirDetalhes();
-                                listaReserva.remove(veiculoDevolvido);
-                                listaVeiculos.add(veiculoDevolvido);
-                
-                                
-                                salvarVeiculos();  
-                                
-                            } else {
-                                throw new RuntimeException("Opção inválida, tente novamente.");
                             }
+                
+                            Veiculo veiculoDevolvido = listaReserva.get(escolha - 1);
+                
+                            System.out.print("Quantos dias o veículo foi reservado? ");
+                            int diasDevolucao = scanner.nextInt();
+                            scanner.nextLine();
+                
+                            if (diasDevolucao <= 0) {
+                                throw new RuntimeException("O número de dias de devolução deve ser maior que zero.");
+                            }
+                
+                            double valorTotal = veiculoDevolvido.getTarifaDiaria() * diasDevolucao;
+                            System.out.println("O valor total da reserva é: R$ " + valorTotal);
+                
+                            System.out.println("\nVeículo devolvido com sucesso!");
+                            veiculoDevolvido.exibirDetalhes();
+                            listaReserva.remove(veiculoDevolvido);
+                            listaVeiculos.add(veiculoDevolvido);
+                
+                            salvarVeiculos();
                         }
                     } catch (RuntimeException e) {
                         System.out.println(e.getMessage());
@@ -258,9 +303,10 @@ public class App {
                     try {
                         System.out.println("\n=== VEÍCULOS CADASTRADOS ===");
                         if (listaVeiculos.isEmpty()) {
-                            throw new RuntimeException("Nenhum veículo cadastrado.");
+                            throw new RuntimeException("Nenhum veículo cadastrado ou reservado.");
                         } else {
                             for (int i = 0; i < listaVeiculos.size(); i++) {
+                                System.out.println("== Veículos Cadastrados e Reservados ==");
                                 Veiculo veiculo = listaVeiculos.get(i);
                                 System.out.println((i + 1) + "- ");
                                 veiculo.exibirDetalhes();
