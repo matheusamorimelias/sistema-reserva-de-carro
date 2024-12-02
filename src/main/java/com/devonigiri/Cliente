@@ -16,7 +16,6 @@ public class Cliente {
     private List<Reserva> reservasAtivas;
     private List<Reserva>  reservasPassadas;
 
-    //Construtores
 
     public Cliente() {
 
